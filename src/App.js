@@ -12,7 +12,7 @@ function App() {
       .then(response => response.json())
       .then(data => {
         if (data.length > 0) {  
-          setDefaultLocation(data); // Set the entire array of locations
+          setDefaultLocation(data); 
         }
       })
       .catch(error => console.error('Error fetching locations:', error));
