@@ -1,7 +1,31 @@
+:root{
+  --blue-color : #2c6b9b;
+  --orange-color : #ff5900
+}
 .App {
   text-align: center;
+}
+html , body{
+  scroll-behavior: smooth;
 }
 mark{
   background-color: yellow !important;
   padding: 0 !important;
+}
+.back-to-top{
+  position: fixed;
+  color: var(--blue-color);
+  background-color: white;
+  bottom: 15px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50% !important;
+  z-index: 99999;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.4s all;
+}
+.back-to-top:hover{
+  color: #003f70;
 }

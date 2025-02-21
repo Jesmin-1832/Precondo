@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import { Container, Row, Col, Card, Button, Alert, Pagination, Placeholder, Form, ButtonGroup } from "react-bootstrap";
 import "../assets/css/condosPage.css";
@@ -67,7 +66,7 @@ const CondosPage = ({ defaultLocation }) => {
             }
         };
 
-        fetchCondos(statusFilter, selectedLocation); // Fetch condos when status, page, or selected location changes
+        fetchCondos(statusFilter, selectedLocation); 
     }, [statusFilter, page, selectedLocation]);
 
     useEffect(() => {
@@ -78,7 +77,7 @@ const CondosPage = ({ defaultLocation }) => {
 
     const handleStatusChange = (status) => {
         setStatusFilter(status);
-        setPage(1); // Reset to the first page when status changes
+        setPage(1);
     };
 
     useEffect(() => {
@@ -119,13 +118,12 @@ const CondosPage = ({ defaultLocation }) => {
         if (!selectedValue || selectedValue === "▸") {
             console.log("Resetting location filter.");
             setFilterOption("");
-            setSelectedLocation(''); // Reset selected location
+            setSelectedLocation(''); 
             return;
         }
 
         let selectedLocation = defaultLocation.find(location => location.slug.toLowerCase() === selectedValue.toLowerCase());
         if (!selectedLocation) {
-            // If not found in parent locations, search in children
             defaultLocation.forEach(parent => {
                 const childLocation = parent.children?.find(child => child.slug.toLowerCase() === selectedValue.toLowerCase());
                 if (childLocation) selectedLocation = childLocation;
@@ -134,9 +132,8 @@ const CondosPage = ({ defaultLocation }) => {
 
         if (selectedLocation) {
             setFilterOption(selectedLocation.id.toString());
-            setSelectedLocation(selectedLocation.slug); // Set the selected location
-            // Update the URL without reloading
-            window.history.pushState({}, '', `/${selectedLocation.slug}`); // Update the URL without reloading
+            setSelectedLocation(selectedLocation.slug); 
+            window.history.pushState({}, '', `/${selectedLocation.slug}`); 
         } else {
             console.warn(`Location not found for slug: ${selectedValue}`);
         }
@@ -145,6 +142,7 @@ const CondosPage = ({ defaultLocation }) => {
     const handlePageChange = (pageNumber) => {
         if (pageNumber !== page) {
             setPage(pageNumber);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
@@ -155,7 +153,7 @@ const CondosPage = ({ defaultLocation }) => {
     const totalFilteredPages = totalPages;
 
     const markers = condos
-        .filter(condo => condo.position) // Filter out condos without valid positions
+        .filter(condo => condo.position) 
         .map(condo => ({
             position: condo.position,
             popupText: condo.title,
@@ -164,7 +162,7 @@ const CondosPage = ({ defaultLocation }) => {
         }));
 
     const handleMoveToLocation = (condo, localIndex) => {
-        const globalIndex = localIndex; // Use localIndex directly
+        const globalIndex = localIndex; 
         if (condo.latitude && condo.longitude && condo.latitude !== "Location not available" && condo.longitude !== "Longitude not available") {
             const position = [condo.latitude, condo.longitude];
             moveToLocation(position, globalIndex);
@@ -196,7 +194,7 @@ const CondosPage = ({ defaultLocation }) => {
     const endCardIndex = Math.min(page * condosPerPage, Math.max(condos.length, startCardIndex + condosPerPage - 1));
 
     return (
-        <Container fluid className="py-4 page-container">
+        <Container fluid className="page-container">
             {error && <Alert variant="danger">{error}</Alert>}
             <Row className="content-row">
                 <Col md={6} xl={7} className="condo-list">
@@ -241,7 +239,7 @@ const CondosPage = ({ defaultLocation }) => {
                             value={selectedLocation}
                             onChange={handleLocationChange}
                         >
-                            <option value="">-- Select a location --</option>
+                            <option>-- Select a location --</option>
                             {defaultLocation.map((location) => (
                                 <React.Fragment key={location.id}>
                                     <option value={location.slug}>
@@ -289,6 +287,7 @@ const CondosPage = ({ defaultLocation }) => {
                                                 <Card.Img
                                                     variant="top"
                                                     src={condo.image}
+                                                    alt="image"
                                                     className="condo-image"
                                                     onError={(e) => { e.target.onerror = null; e.target.src = fallbackImage; }}
                                                 />
@@ -316,7 +315,7 @@ const CondosPage = ({ defaultLocation }) => {
                                 ))
                             ) : (
                                 <Col className="text-center">
-                                    <Alert variant="warning">No data found</Alert>
+                                    <Alert variant="warning">Loading Or Not Found</Alert>
                                 </Col>
                             )
                         )}

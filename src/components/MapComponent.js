@@ -29,11 +29,12 @@ const LocateControl = () => {
 
     return (
         <button
+            aria-label="Locate me"
             onClick={() => map.locate({ setView: true, maxZoom: 14 })}
             style={{
                 fontSize: '18px',
                 position: 'absolute',
-                bottom: 10,
+                bottom: 30,
                 right: 10,
                 zIndex: 1000,
                 background: 'white',
@@ -67,7 +68,7 @@ const MapComponent = React.forwardRef(({ markers, center }, ref) => {
     const layers = [
         { name: "Street Map", url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' },
         { name: "Satelite", url: "https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}", attribution: '&copy; Google Maps', subdomains: ['mt0', 'mt1', 'mt2', 'mt3'] },
-        { name: "Night Mode", url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", attribution: '&copy; Stadia Maps, &copy; OpenMapTiles, &copy; OpenStreetMap contributors' }    ];
+        { name: "Night Mode", url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", attribution: '&copy; Stadia Maps, &copy; OpenMapTiles, &copy; OpenStreetMap contributors' }];
 
     return (
         <MapContainer center={center} zoom={12} minZoom={2} className='map_container' ref={mapRef}>
@@ -95,7 +96,7 @@ const MapComponent = React.forwardRef(({ markers, center }, ref) => {
                         }}
                     >
                         <Popup>
-                            <img src={marker.image} alt={marker.popupText} /> 
+                            <img src={marker.image} alt={marker.popupText} />
                             <p className='my-2'>{marker.popupText}</p>
                             <Link to={marker.link} target="_blank" className="details-button w-100 d-block">
                                 Request Info
